@@ -19,10 +19,14 @@ document.head.appendChild(katex)
 
 class RazzleDeck extends HTMLElement {
     constructor() {
-        super()
-
+      super()
+      this.shadow = this.attachShadow({ mode: "open" })
+    }
+    
+    connectedCallback() {
+        if (this.initialized) return
+        this.initialized = true
         const children = this.children
-        const shadow = this.attachShadow({ mode: "open" })
 
         //create shadowDOM content
         const style = document.createElement("style")
@@ -38,8 +42,6 @@ class RazzleDeck extends HTMLElement {
            </defs>
         </svg>
         `
-
-
         style.textContent = `
         :host {
             background: rgb(240,240,240);
@@ -107,12 +109,12 @@ class RazzleDeck extends HTMLElement {
 
         `
 
-        shadow.appendChild(style);
-        shadow.appendChild(kclone);
-        shadow.appendChild(svgDefs);
+        this.shadow.appendChild(style);
+        this.shadow.appendChild(kclone);
+        this.shadow.appendChild(svgDefs);
         [...children].map(child => {
           renderMathInElement(child)
-          shadow.appendChild(child)
+          this.shadow.appendChild(child)
         })
 
         // wait for fonts, etc. 
@@ -124,8 +126,10 @@ class RazzleSlide extends HTMLElement {
     constructor() {
         super()
 
-        const shadow = this.attachShadow({ mode: "open" })
+        this.shadow = this.attachShadow({ mode: "open" })
+    }
 
+    connectedCallback() {
         const style = document.createElement("style")
         const slide = document.createElement("div")
         slide.classList = "slide"
@@ -162,16 +166,65 @@ class RazzleSlide extends HTMLElement {
         .content {
             max-width: calc(77 * var(--razzle-unit));
         }
-
-
         `
 
-        shadow.appendChild(style)
-        shadow.appendChild(slide)
+        this.shadow.appendChild(style)
+        this.shadow.appendChild(slide)
         slide.appendChild(content)
         content.appendChild(slot)
     }
 }
 
+class RazzleVideo extends HTMLElement {
+    constructor() {
+        super()
+
+        this.shadow = this.attachShadow({ mode: "open" })
+    }
+
+    connectedCallback() {
+        const style = document.createElement("style")
+        const slide = document.createElement("div")
+        slide.classList = "slide"
+        const content = document.createElement("video")
+        content.classList = "content"
+
+        style.textContent = `
+        :host {
+            height: 100vh;
+            min-width: 100vw;
+            display: flex;
+            scroll-snap-align: center;
+            font-family: 'Inter';
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide {
+            min-height: calc(77 * var(--razzle-unit));
+            height: calc(77 * var(--razzle-unit));
+            min-width: calc(77 * var(--razzle-unit));
+            width: calc(110 * var(--razzle-unit));
+            padding: calc(5 * var(--razzle-unit));
+            margin: calc(5 * var(--razzle-unit));
+            display: flex;
+            position:relative;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .content {
+            max-width: calc(77 * var(--razzle-unit));
+        }
+        `
+
+        this.shadow.appendChild(style)
+        this.shadow.appendChild(slide)
+        slide.appendChild(content)
+    }
+}
+
 registry.define("razzle-deck", RazzleDeck)
 registry.define("razzle-slide", RazzleSlide)
+registry.define("razzle-video", RazzleVideo)
