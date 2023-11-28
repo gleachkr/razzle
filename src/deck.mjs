@@ -234,13 +234,13 @@ class RazzleIFrame extends HTMLElement {
       }
 
       .slide {
-        min-height: calc(77 * var(--razzle-unit));
-        height: calc(77 * var(--razzle-unit));
-        min-width: calc(77 * var(--razzle-unit));
-        width: calc(110 * var(--razzle-unit));
-        padding: calc(5 * var(--razzle-unit));
+        min-height: calc(82 * var(--razzle-unit));
+        height: calc(82 * var(--razzle-unit));
+        min-width: calc(82 * var(--razzle-unit));
+        width: calc(115 * var(--razzle-unit));
         margin: calc(5 * var(--razzle-unit));
         display: flex;
+        border:none;
         position:relative;
         flex-direction:column;
         justify-content:center;
