@@ -212,6 +212,48 @@ class RazzleVideo extends HTMLElement {
   }
 }
 
+class RazzleIFrame extends HTMLElement {
+  connectedCallback() {
+    if (this.initialized) return
+    this.initialized = true
+    this.shadow = this.attachShadow({ mode: "open" })
+    const style = document.createElement("style")
+    const slide = document.createElement("iframe")
+    slide.src = this.getAttribute("src")
+    slide.classList = "slide"
+
+    style.textContent = `
+      :host {
+        height: 100vh;
+        min-width: 100vw;
+        display: flex;
+        scroll-snap-align: center;
+        font-family: 'Inter';
+        align-items: center;
+        justify-content: center;
+      }
+
+      .slide {
+        min-height: calc(77 * var(--razzle-unit));
+        height: calc(77 * var(--razzle-unit));
+        min-width: calc(77 * var(--razzle-unit));
+        width: calc(110 * var(--razzle-unit));
+        padding: calc(5 * var(--razzle-unit));
+        margin: calc(5 * var(--razzle-unit));
+        display: flex;
+        position:relative;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+      }
+    `
+
+    this.shadow.appendChild(style)
+    this.shadow.appendChild(slide)
+  }
+}
+
 registry.define("razzle-deck", RazzleDeck)
 registry.define("razzle-slide", RazzleSlide)
 registry.define("razzle-video", RazzleVideo)
+registry.define("razzle-iframe", RazzleIFrame)
