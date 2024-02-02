@@ -1,6 +1,7 @@
-import Katex from "https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.mjs";
+import "https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.mjs";
+import Prism from "https://cdn.jsdelivr.net/npm/prismjs@1.29.0/+esm";
+import "https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.js";
 import renderMathInElement from "https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.mjs";
-
 const registry = window.customElements
 
 //make sure fonts are available
@@ -29,6 +30,11 @@ class RazzleDeck extends HTMLElement {
     const style = document.createElement("style")
     const svgDefs = document.createElement("div")
     const kclone = katex.cloneNode()
+    const prismcss = document.createElement("link")
+    prismcss.setAttribute("href","https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css")
+    prismcss.setAttribute("rel","stylesheet")
+    prismcss.setAttribute("crossorigin","anonymous")
+    prismcss.setAttribute("integrity","sha256-ko4j5rn874LF8dHwW29/xabhh8YBleWfvxb8nQce4Fc=")
 
     svgDefs.innerHTML = `<svg style="position:absolute">
       <defs>
@@ -37,8 +43,8 @@ class RazzleDeck extends HTMLElement {
       <polygon points="0 0, 10 3.5, 0 7" />
       </marker>
       </defs>
-      </svg>
-      `
+      </svg>`
+
     style.textContent = `
       :host {
         background: rgb(240,240,240);
@@ -102,15 +108,15 @@ class RazzleDeck extends HTMLElement {
       overflow:visible;
       height:200px;
       width:200px;
-    }
-
-    `
+    }`
 
     this.shadow.appendChild(style);
     this.shadow.appendChild(kclone);
+    this.shadow.appendChild(prismcss);
     this.shadow.appendChild(svgDefs);
     [...children].map(child => {
       renderMathInElement(child)
+      Prism.highlightAllUnder(child)
       this.shadow.appendChild(child)
     })
 
