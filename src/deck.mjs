@@ -47,7 +47,7 @@ class RazzleDeck extends HTMLElement {
 
     style.textContent = `
       :host {
-        background: rgb(240,240,240);
+        background: var(--razzle-backdrop, rgb(240,240,240));
         display: flex;
         height: 100vh;
         width: 100%;
@@ -60,55 +60,55 @@ class RazzleDeck extends HTMLElement {
         line-height:1.5;
       }
 
-    razzle-slide {
-      opacity:var(--razzle-opacity);
-      transition: opacity .25s;
-      position:relative;
-    }
+      razzle-slide {
+        opacity:var(--razzle-opacity);
+        transition: opacity .25s;
+        position:relative;
+      }
 
-    razzle-slide h1 {
-      font-size:3em;
-      font-weight:900;
-      position:absolute;
-      top:-.2em;
-      left:.5em;
-    }
+      razzle-slide h1 {
+        font-size:3em;
+        font-weight:900;
+        position:absolute;
+        top:-.2em;
+        left:.5em;
+      }
 
-    razzle-slide p > ol, razzle-slide p > ul {
-      width:90%;
-    }
+      razzle-slide p > ol, razzle-slide p > ul {
+        width:90%;
+      }
 
-    razzle-slide h3 {
-      position:absolute;
-      top:1em;
-      left:1.2em;
-    }
+      razzle-slide h3 {
+        position:absolute;
+        top:1em;
+        left:1.2em;
+      }
 
-    razzle-slide dt {
-      font-variant: small-caps;
-    }
+      razzle-slide dt {
+        font-variant: small-caps;
+      }
 
-    razzle-slide blockquote {
-      position:relative;
-    }
-    razzle-slide blockquote::before {
-      content:'“';
-      position: absolute;
-      left:-.5em;
-      top:-.25em;
-      max-width:0px;
-      font-size:2em;
-    }
-    razzle-slide svg {
-      font-size:24px;
-      width:calc(55*var(--razzle-unit));
-    }
+      razzle-slide blockquote {
+        position:relative;
+      }
+      razzle-slide blockquote::before {
+        content:'“';
+        position: absolute;
+        left:-.5em;
+        top:-.25em;
+        max-width:0px;
+        font-size:2em;
+      }
+      razzle-slide svg {
+        font-size:24px;
+        width:calc(55*var(--razzle-unit));
+      }
 
-    svg foreignObject {
-      overflow:visible;
-      height:200px;
-      width:200px;
-    }`
+      svg foreignObject {
+        overflow:visible;
+        height:200px;
+        width:200px;
+      }`
 
     this.shadow.appendChild(style);
     this.shadow.appendChild(kclone);
@@ -150,7 +150,8 @@ class RazzleSlide extends HTMLElement {
       }
 
       .slide {
-        background: white;
+        color: var(--razzle-primary-text, black);
+        background: var(--razzle-slide-background, white);
         min-height: calc(77 * var(--razzle-unit));
         height: calc(77 * var(--razzle-unit));
         min-width: calc(77 * var(--razzle-unit));
