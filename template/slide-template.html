@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"$if(dir)$ dir="$dir$"$endif$>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+$for(author-meta)$
+  <meta name="author" content="$author-meta$" />
+$endfor$
+$if(date-meta)$
+  <meta name="dcterms.date" content="$date-meta$" />
+$endif$
+$if(keywords)$
+  <meta name="keywords" content="$for(keywords)$$keywords$$sep$, $endfor$" />
+$endif$
+$if(description-meta)$
+  <meta name="description" content="$description-meta$" />
+$endif$
+  <title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
+$for(css)$
+  <link rel="stylesheet" href="$css$" />
+$endfor$
+$for(header-includes)$
+  $header-includes$
+$endfor$
+$if(math)$
+  $math$
+$endif$
+<script type="module" src="https://cdn.jsdelivr.net/gh/gleachkr/razzle@latest/src/deck.mjs"></script>
+<script type="module" src="https://cdn.jsdelivr.net/gh/gleachkr/ProofML@HEAD/src/proof.mjs"></script>
+<style>
+body {
+  margin:0;
+}
+</style>
+</head>
+<body>
+$for(include-before)$
+$include-before$
+$endfor$
+<razzle-deck>
+  <razzle-slide>
+  $body$
+  </razzle-slide>
+</razzle-deck>
+</main>
+$for(include-after)$
+$include-after$
+$endfor$
+</body>
+</html>
