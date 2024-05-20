@@ -30,11 +30,14 @@ class RazzleDeck extends HTMLElement {
     const style = document.createElement("style")
     const svgDefs = document.createElement("div")
     const kclone = katex.cloneNode()
+
     const prismcss = document.createElement("link")
     prismcss.setAttribute("href","https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css")
     prismcss.setAttribute("rel","stylesheet")
     prismcss.setAttribute("crossorigin","anonymous")
     prismcss.setAttribute("integrity","sha256-ko4j5rn874LF8dHwW29/xabhh8YBleWfvxb8nQce4Fc=")
+
+    
 
     svgDefs.innerHTML = `<svg style="position:absolute">
       <defs>
@@ -54,13 +57,15 @@ class RazzleDeck extends HTMLElement {
         flex-direction:row;
         overflow-x:scroll;
         scroll-snap-type: x mandatory;
-        --razzle-unit: min(1vh,1vw);
+        --razzle-unit: 10pt;
+        --razzle-scale: ${Math.min(innerWidth, innerHeight)/1200};
         font-size:calc(3 * var(--razzle-unit));
         --razzle-opacity: 0;
         line-height:1.5;
       }
 
       razzle-slide {
+        transform: scale(var(--razzle-scale));
         opacity:var(--razzle-opacity);
         transition: opacity .25s;
         position:relative;
@@ -91,6 +96,7 @@ class RazzleDeck extends HTMLElement {
       razzle-slide blockquote {
         position:relative;
       }
+
       razzle-slide blockquote::before {
         content:'“';
         position: absolute;
@@ -121,7 +127,10 @@ class RazzleDeck extends HTMLElement {
     })
 
     // wait for fonts, etc. 
-      addEventListener("DOMContentLoaded", () => this.style.setProperty("--razzle-opacity",1));
+    addEventListener("DOMContentLoaded", () => this.style.setProperty("--razzle-opacity",1));
+
+    // resize with viewport
+    addEventListener("resize", () => this.style.setProperty("--razzle-scale", Math.min(innerWidth, innerHeight)/1200));
   }
 }
 
