@@ -1,5 +1,5 @@
 {
-  description = "A very basic flake";
+  description = "Razzle: HTML Presentation Primitives";
 
   inputs.flake-utils.url  = "github:numtide/flake-utils";
 
@@ -13,6 +13,11 @@
           pkgs.nodePackages.typescript-language-server 
           pkgs.nodePackages.browser-sync
         ]; 
+      };
+
+      templates.default = { 
+        path = ./template; 
+        description = "A pandoc-powered razzle presentation";
       };
   });
 }
