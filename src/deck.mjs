@@ -58,14 +58,13 @@ class RazzleDeck extends HTMLElement {
         overflow-x:scroll;
         scroll-snap-type: x mandatory;
         --razzle-unit: 10pt;
-        --razzle-scale: ${Math.min(innerWidth, innerHeight) / 1200};
+        --razzle-scale: ${Math.min(1, Math.min(innerWidth, innerHeight) / 1200)};
         font-size:calc(3 * var(--razzle-unit));
         --razzle-opacity: 0;
         line-height:1.5;
       }
 
       razzle-slide {
-        transform: scale(var(--razzle-scale));
         opacity:var(--razzle-opacity);
         transition: opacity .25s;
         position:relative;
@@ -149,7 +148,8 @@ class RazzleDeck extends HTMLElement {
     addEventListener("DOMContentLoaded", () => this.style.setProperty("--razzle-opacity", 1));
 
     // resize with viewport
-    addEventListener("resize", () => this.style.setProperty("--razzle-scale", Math.min(innerWidth, innerHeight) / 1200));
+    addEventListener("resize", () => 
+      this.style.setProperty("--razzle-scale", Math.min(1, Math.min(innerWidth, innerHeight) / 1200)));
   }
 }
 
@@ -178,6 +178,7 @@ class RazzleSlide extends HTMLElement {
       }
 
       .slide {
+        transform: scale(var(--razzle-scale));
         color: var(--razzle-primary-text, black);
         background: var(--razzle-slide-background, white);
         min-height: calc(77 * var(--razzle-unit));
@@ -228,6 +229,7 @@ class RazzleVideo extends HTMLElement {
       }
 
       .slide {
+        transform: scale(var(--razzle-scale));
         min-height: calc(77 * var(--razzle-unit));
         height: calc(77 * var(--razzle-unit));
         min-width: calc(77 * var(--razzle-unit));
@@ -269,6 +271,7 @@ class RazzleIFrame extends HTMLElement {
       }
 
       .slide {
+        transform: scale(var(--razzle-scale));
         min-height: calc(82 * var(--razzle-unit));
         height: calc(82 * var(--razzle-unit));
         min-width: calc(82 * var(--razzle-unit));
